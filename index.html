@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./bootstrap.css">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Calculator demo</title>
+</head>
+<body>
+  <!--整體  -->
+  <main class=overall>
+    <!-- TODO: id 後面應為字串形式 -->
+    <!--第一行 輸入/顯示值的地方  -->
+    <section class='display-value' id=display>0</section>
+
+    <!--第二行 刪除 % C / -->
+    <section class="content">
+      <div>
+        <!-- TODO: 運算符的 class 應該相同，方便後續區分數字和運算符 -->
+        <span class="deleteOne" id=deleteOne>←</span>
+        <span class="percent" id=percent>%</span>
+        <span class="clearAll" id=clear-all>C </span>
+        <span class="divide" id=divide>÷</span>
+      </div>
+
+      <!--第三行 789 *  -->
+
+      <div>
+        <span class="number" id=seven>7</span>
+        <span class="number" id=eight>8</span>
+        <span class="number" id=nine>9</span>
+        <span class="multiply" id=multiply> × </span>
+      </div>
+
+      <!--第四行 456 -  -->
+      <div>
+        <span class="number" id=four>4</span>
+        <span class="number" id=five>5</span>
+        <span class="number" id=six>6</span>
+        <span class="minus" id=minus> - </span>
+      </div>
+      <!--第五行 123 +  -->
+      <div>
+        <span class="number" id=one>1</span>
+        <span class="number" id=two>2</span>
+        <span class="number" id=three>3</span>
+        <span class="add" id=add> + </span>
+      </div>
+      <!--第六行 00 0 . =  -->
+      <div>
+        <span class="number" id=doublezero>00</span>
+        <span class="number" id=zero>0</span>
+        <span class="dot" id=dot>.</span>
+        <span class="equal" id=equal> = </span>
+      </div>
+    </section>
+  </main>
+  <script src="./index.js"></script>
+</body>
+</html>

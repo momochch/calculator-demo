@@ -1,0 +1,68 @@
+main {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f5f5;
+  border-radius: 15px;
+  width: 310px;
+  length: 700px;
+  margin: 5px;
+  padding: 15px;
+}
+section {
+  width: 280px;
+  height: 82px;
+}
+div {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 0 0;
+}
+.display-value {
+  border-style: outset; /*浮出線*/
+  border-radius: 10px;
+  width: 280px;
+  lenght: 20px;
+  margin: 0;
+  padding: 12px;
+  font-size: 36px;
+  text-align: right;
+  background-color: #d9d9d9;
+}
+span {
+  display: flex;
+  display: inline-block;
+  width: 63px;
+  height: 63px;
+  border-radius: 10px;
+  font-size: 30px;
+  text-align: center; /*文字左右置中*/
+  align-content: center; /*文字上下置中*/
+  text-shadow: #333333 0 1px;
+}
+.symbol,
+.deleteOne,
+.percent,
+.clearAll,
+.dot,
+.equal,
+.add,
+.minus,
+.multiply,
+.divide {
+  color: white;
+  background-color: #004d00;
+}
+
+.number {
+  color: white;
+  background-color: #336600;
+}
+
+/*按了之後的樣式改變  */
+.symbolClick {
+  background-color: #207b28;
+}
+
+.numberClick {
+  background-color: #4d9900;
+}
