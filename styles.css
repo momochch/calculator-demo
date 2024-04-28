@@ -4,7 +4,7 @@ main {
   background-color: #f0f5f5;
   border-radius: 15px;
   width: 310px;
-  length: 700px;
+  height: 700px;
   margin: 5px;
   padding: 15px;
 }
@@ -21,7 +21,7 @@ div {
   border-style: outset; /*浮出線*/
   border-radius: 10px;
   width: 280px;
-  lenght: 20px;
+  height: 20px;
   margin: 0;
   padding: 12px;
   font-size: 36px;
