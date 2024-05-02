@@ -26,10 +26,6 @@ section {
   font-size: 36px;
   text-align: right;
   background-color: #d9d9d9;
-  overflow: hidden;
-  /*數字輸入太多時不要超過欄位 */
-  white-space: nowrap;
-  /*數字輸入太多時不要換行*/
 }
 
 button {

@@ -1,4 +1,4 @@
-//還可以把全部按鈕綁在一起監聽，在分別抓
+//還可以把全部按鈕綁在一起監聽，再分別抓
 // 未來可再加算完結果後，按下一鍵重新開始(function restart)
 
 // ---節點---
@@ -12,7 +12,8 @@ let firstInput = true; //是否已經輸入第一個數字
 let firstNumber = ""; // 儲存第一個值
 let secondNumber = ""; // 儲存第二個值
 let currentOperation = "";
-// let result = "";
+const maxNumberLength = 10; //最多只能輸入10個數字
+const error = "ERROR"; //超過10個數字顯示error
 
 //---監聽---
 calculatorBtn.forEach((button) => {
@@ -23,10 +24,19 @@ calculatorBtn.forEach((button) => {
       if (currentOperation === "") {
         firstNumber += number;
         // console.log(`number1: ${firstNumber}`);
+        if (firstNumber.length > maxNumberLength) {
+          firstNumber = "";
+          firstNumber += error;
+        }
       } else {
         secondNumber += number;
         // console.log(`number2: ${secondNumber}`);
+        if (secondNumber.length > maxNumberLength) {
+          secondNumber = "";
+          secondNumber += error;
+        }
       }
+
       showValue(button);
     }
     if (event.target.classList.contains("operation")) {
@@ -63,11 +73,11 @@ function deleteOneNumber() {
   //   如果還沒按符號，減完的數值傳入第一數，反之傳入第二數
   if (currentOperation === "") {
     firstNumber = currentNumber;
-    // console.log("currentNumber:" + currentNumber);
+    console.log("currentNumber:" + currentNumber);
   } else {
     displayValue.textContent = "";
     secondNumber = currentNumber;
-    // console.log("currentNumber2:" + currentNumber);
+    console.log("currentNumber2:" + currentNumber);
   }
   displayValue.textContent = currentNumber;
 
@@ -86,11 +96,11 @@ function clickedPercent() {
   //   如果還沒按符號，除完100的數值傳入第一數，反之傳入第二數
   if (currentOperation === "") {
     firstNumber = currentNumber;
-    // console.log("currentNumber:" + currentNumber);
+    console.log("currentNumber:" + currentNumber);
   } else {
     displayValue.textContent = "";
     secondNumber = currentNumber;
-    // console.log("currentNumber2:" + currentNumber);
+    console.log("currentNumber2:" + currentNumber);
   }
   displayValue.textContent = currentNumber;
 }
