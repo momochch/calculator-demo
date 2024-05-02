@@ -4,51 +4,55 @@ main {
   background-color: #f0f5f5;
   border-radius: 15px;
   width: 310px;
-  height: 700px;
-  margin: 5px;
+  height: 480px;
+  margin: 50px;
   padding: 15px;
 }
+
 section {
   width: 280px;
   height: 82px;
 }
-div {
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 0 0 0;
-}
+
 .display-value {
-  border-style: outset; /*浮出線*/
+  border-style: outset;
+  /*浮出線*/
+  justify-content: center;
   border-radius: 10px;
   width: 280px;
-  height: 20px;
+  height: 80px;
   margin: 0;
   padding: 12px;
   font-size: 36px;
   text-align: right;
   background-color: #d9d9d9;
+  overflow: hidden;
+  /*數字輸入太多時不要超過欄位 */
+  white-space: nowrap;
+  /*數字輸入太多時不要換行*/
 }
-span {
+
+button {
   display: flex;
   display: inline-block;
-  width: 63px;
-  height: 63px;
+  justify-content: center;
+  margin: 8px 1px 0 0;
+  width: 65px;
+  height: 65px;
   border-radius: 10px;
   font-size: 30px;
-  text-align: center; /*文字左右置中*/
-  align-content: center; /*文字上下置中*/
+  text-align: center;
+  /*文字左右置中*/
+  align-content: center;
+  /*文字上下置中*/
   text-shadow: #333333 0 1px;
 }
-.symbol,
-.deleteOne,
-.percent,
-.clearAll,
-.dot,
+
+.operation,
 .equal,
-.add,
-.minus,
-.multiply,
-.divide {
+.delete-one,
+.percent,
+.clear-all {
   color: white;
   background-color: #004d00;
 }
@@ -59,10 +63,16 @@ span {
 }
 
 /*按了之後的樣式改變  */
-.symbolClick {
+.operation:active,
+.equal:active,
+.delete-one:active,
+.percent:active,
+.clear-all:active {
+  color: white;
   background-color: #207b28;
 }
 
-.numberClick {
+.number:active {
+  color: white;
   background-color: #4d9900;
 }

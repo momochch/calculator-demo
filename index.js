@@ -1,147 +1,139 @@
-// 目前的問題是按下第一個數字鍵不會傳入 firstValue 裡面，要按下第二個數字鍵才會傳入第一個案的數字，以及按下'等於'時，沒有回傳結果
-
-// 後續還要再解決按完 C 雖然歸零，但是按下第一個數字 console 出來仍是 Second value
+//還可以把全部按鈕綁在一起監聽，在分別抓
+// 未來可再加算完結果後，按下一鍵重新開始(function restart)
 
 // ---節點---
-const displayValue = document.querySelector(".display-value"); // 顯示的地方
-const number = document.querySelectorAll(".number"); //00, 0-9
+const displayValue = document.querySelector(".display-value"); //顯示的地方
+const calculatorBtn = document.querySelectorAll(".number, .operation, .equal");
 const percent = document.querySelector(".percent"); //%
-const deleteOne = document.querySelector(".deleteOne"); // <--
-const clearAll = document.querySelector(".clearAll"); //C
-const equal = document.querySelector(".equal");
-const dot = document.querySelector(".dot");
-const operation = document.querySelectorAll(".add, .minus, .multiply, .divide");
+const deleteOne = document.querySelector(".delete-one"); // <--
+const clearAll = document.querySelector("#clear-all"); //C
 
-// 是否已經輸入第一個數字
-let firstInput = true;
-let firstValue = ""; // 儲存上一個值
-let secoedValue = ""; // 儲存新值
-let currentOperation = ""; // 儲存運算符號
+let firstInput = true; //是否已經輸入第一個數字
+let firstNumber = ""; // 儲存第一個值
+let secondNumber = ""; // 儲存第二個值
+let currentOperation = "";
+// let result = "";
 
-// --- 監聽 ---
-// 監聽數字按鈕 --- number 和 operation 要 forEach---
-// TODO: 監聽數字按鈕和運算符的上層容器，再根據按鈕的 class 或 id 判斷哪一個按鈕被點擊
-number.forEach((button) => {
-  button.addEventListener("click", function () {
-    // TODO: displayValue 是顯示的數值，應取得當前 button 的數值
-    const number = button.textContent;
-    console.log(`number: ${number}`);
+//---監聽---
+calculatorBtn.forEach((button) => {
+  button.addEventListener("click", function clickedNumber(event) {
+    let number = button.textContent;
 
-    let clickedNumber = displayValue.textContent;
-    // 檢查當前操作是否為空
-
-    if (currentOperation === "") {
-      // 如果是空，將顯示的值賦給previousValue
-      firstValue = clickedNumber;
-      console.log("First value: " + firstValue);
-    } else {
-      // 如果不是空，將顯示的值賦給currentValue
-      secoedValue = clickedNumber;
-      console.log("Second value: " + secoedValue);
+    if (event.target.classList.contains("number")) {
+      if (currentOperation === "") {
+        firstNumber += number;
+        // console.log(`number1: ${firstNumber}`);
+      } else {
+        secondNumber += number;
+        // console.log(`number2: ${secondNumber}`);
+      }
+      showValue(button);
     }
-
-    // TODO: 宣告 function calculate(firstValue, secoedValue) 時，要求傳入參數，不可以留空
-    calculate();
-    showValue();
-  });
-});
-operation.forEach((button) => {
-  button.addEventListener("click", function () {
-    currentOperation = button.textContent;
-    firstInput = true;
-    console.log(currentOperation);
-    calculate();
+    if (event.target.classList.contains("operation")) {
+      currentOperation = event.target.textContent;
+      // console.log("currentOperation:" + currentOperation);
+    }
+    if (event.target.classList.contains("equal")) {
+      calculate(firstNumber, secondNumber);
+      showResult(result);
+    }
   });
 });
 
-// 監聽 %
-percent.addEventListener("click", clickedPercent);
+percent.addEventListener("click", clickedPercent); //監聽 %
+deleteOne.addEventListener("click", deleteOneNumber); //監聽  <--
+clearAll.addEventListener("click", clearAllNumber); //監聽 C
+equal.addEventListener("click", calculate); //監聽 =
 
-// 監聽  <--
-deleteOne.addEventListener("click", deleteOneNumber);
+//---function---
 
-// 監聽 C
-clearAll.addEventListener("click", clearAllNumber);
-
-// 監聽 .
-dot.addEventListener("click", showValue);
-
-//監聽 =
-equal.addEventListener("click", function () {
-  calculate();
-  console.log(equal.textContent);
-});
-
-// ---function---
-// 按 C 清除所有數字，並顯示 0
+//按C清除所有數字，並顯示0
 function clearAllNumber() {
-  // const clickedClearAll = (displayValue.textContent = 0);
-  displayValue.textContent = 0;
-  firstInput = true;
-  firstValue = "";
-  secoedValue = "";
+  const clickedClearAll = (displayValue.textContent = 0);
+  currentOperation = "";
+  firstNumber = "";
+  secondNumber = "";
 }
 
-// 按 <-- 刪除最後一個輸入的數字
+//按<-- 刪除最後一個輸入的數字
 function deleteOneNumber() {
   let currentNumber = displayValue.textContent;
   currentNumber = currentNumber.slice(0, -1);
+
+  //   如果還沒按符號，減完的數值傳入第一數，反之傳入第二數
+  if (currentOperation === "") {
+    firstNumber = currentNumber;
+    // console.log("currentNumber:" + currentNumber);
+  } else {
+    displayValue.textContent = "";
+    secondNumber = currentNumber;
+    // console.log("currentNumber2:" + currentNumber);
+  }
   displayValue.textContent = currentNumber;
 
   if (currentNumber === "") {
     displayValue.textContent = "0";
-    firstInput = true;
-  } // 如果刪到空了，顯示 0，並回到 firstInput = true 狀態
+    firstNumber = "";
+    secondNumber = "";
+  }
 }
 
-// 按 % 將該數 /100 後顯示
+//按% 將該數/100後顯示
 function clickedPercent() {
   let currentNumber = displayValue.textContent;
   currentNumber = currentNumber / 100;
+
+  //   如果還沒按符號，除完100的數值傳入第一數，反之傳入第二數
+  if (currentOperation === "") {
+    firstNumber = currentNumber;
+    // console.log("currentNumber:" + currentNumber);
+  } else {
+    displayValue.textContent = "";
+    secondNumber = currentNumber;
+    // console.log("currentNumber2:" + currentNumber);
+  }
   displayValue.textContent = currentNumber;
 }
 
-// 執行秀在 display 框框裡
-// 只顯示數字
-function showValue() {
-  // TODO: 這裡預期取得按鈕上的值，但沒有傳入 event 這個變數，目前可以正確運作是 JS 猜測你的意圖，但
-  let clickedNumber = event.target.textContent; // 取得按鈕上的值
-  console.log(`clickedNumber: ${clickedNumber}`);
+//執行秀在display框框裡
+//只顯示數字
+function showValue(button) {
+  let clickedNumber = button.textContent; //取得按鈕上的值
 
-  // TODO: firstInput 為 true 的時候，等價於 firstInput === true，不需要再判斷它是否為 true
-  if (firstInput === true) {
+  if (firstInput) {
     displayValue.textContent = "";
-    firstInput = false; // 清空之後就是 false，表示已經輸入第一個值
+    firstInput = false; //清空之後就是false，表示已經輸入第一個值
   }
-  displayValue.textContent += clickedNumber;
+  if (currentOperation === "") {
+    displayValue.textContent = firstNumber;
+  } else {
+    displayValue.textContent = "";
+    displayValue.textContent = secondNumber;
+  }
+
+  //顯示結果
+}
+function showResult(result) {
+  displayValue.textContent = "";
+  displayValue.textContent += result;
 }
 
-// 運算
-// 先進行計算，不要跑去 displayValue 裡面
-// TODO: firstValue, secoedValue 預設為字串，計算前應透過 Number(xxx) 轉換成數字
-// TODO: 目前呼叫 calculate 的地方都沒有用變數來儲存返回值 result
-// TODO: 如果這裡是希望計算最上方宣告的 firstValue, secoedValue，那函式就不需要宣告這兩個參數
-function calculate(firstValue, secoedValue) {
-  // TODO: 使用字串來拼接，會變成 3 + 5 --> 35
-  let result = "";
-
+//運算
+// parseFloat & parseInt 轉成數值運算，parseFloat可算小數點
+function calculate(firstNumber, secondNumber) {
   switch (currentOperation) {
     case "+":
-      result = firstValue + secoedValue;
+      result = parseFloat(firstNumber) + parseFloat(secondNumber);
       break;
     case "-":
-      result = firstValue - secoedValue;
+      result = parseFloat(firstNumber) - parseFloat(secondNumber);
       break;
     case "×":
-      result = firstValue * secoedValue;
+      result = parseFloat(firstNumber) * parseFloat(secondNumber);
       break;
     case "÷":
-      result = firstValue / secoedValue;
+      result = parseFloat(firstNumber) / parseFloat(secondNumber);
       break;
-    default:
-      result = firstValue;
   }
   return result;
-  // displayValue.textContent = result;
-  // console.log("result" + result);
 }
